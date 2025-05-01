@@ -18,7 +18,7 @@ class AuthController extends Controller
     }
     public function showRegistrationForm()
     {
-        return view('auth.register'); // Assuming your view is in resources/views/auth/register.blade.php
+        return view('auth.register');
     }
 
     public function register(Request $request)
@@ -39,7 +39,7 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'user', // Default role
+            'role' => 'user',
         ]);
 
         return redirect()->route('register')
