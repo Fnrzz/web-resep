@@ -40,7 +40,7 @@
       <button type="submit" class="btn btn-orange">Login</button>
     </div>
     <div class="text-center mt-3 link-register">
-      <a href="#">Belum Punya Akun ?</a>
+      <a href="{{ route('register') }}">Belum Punya Akun ?</a>
     </div>
   </form>
 </div>

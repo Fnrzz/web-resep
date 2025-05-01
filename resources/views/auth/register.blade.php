@@ -1,11 +1,9 @@
 @extends('auth.layouts.layout')
 
-@section('title', 'Register')
-
 @section('content')
 <img src="{{ asset('images/elemen.png') }}" alt="Dekorasi Atas" class="header-image" />
 
-<div class="register-box text-center">
+<div class="login-box text-center">
   <h4 class="fw-bold mb-4">REGISTER</h4>
   
   @if ($errors->any())
@@ -62,12 +60,6 @@
     </div>
   </form>
 </div>
-
-
-
-
-
-
 
 <img src="{{ asset('images/elemen.png') }}" alt="Dekorasi Bawah" class="footer-image" />
 @endsection
