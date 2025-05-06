@@ -28,12 +28,8 @@
                                     <td>
                                         <a href="{{ route('admin.recipes.ingredients.edit', $ingredient->id) }}"
                                             class="btn btn-warning btn-sm">Edit</a>
-                                        <form action="{{ route('admin.recipes.ingredients.destroy', $ingredient->id) }}"
-                                            method="POST" class="d-inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                                        </form>
+                                        <a href="{{ route('admin.recipes.ingredients.destroy', $ingredient->id) }}"
+                                            class="btn btn-danger btn-sm" data-confirm-delete="true">Hapus</a>
                                     </td>
                                 </tr>
                             @endforeach

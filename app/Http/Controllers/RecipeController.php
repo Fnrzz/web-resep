@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class RecipeController extends Controller
 {
@@ -15,6 +16,7 @@ class RecipeController extends Controller
     public function index()
     {
         $recipes = Recipe::all();
+        confirmDelete('Kamu yakin?', 'Kamu akan menghapus semua data');
         return view('admin.recipes.index', compact('recipes'));
     }
 
@@ -33,12 +35,14 @@ class RecipeController extends Controller
         ]);
 
         if ($validator->fails()) {
+            Alert::error('Error', 'Failed to create recipe');
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
         $slug = Str::slug($request->title, '-');
 
         if (Recipe::where('slug', $slug)->exists()) {
+            Alert::error('Error', 'Title already exists');
             return redirect()->back()->withErrors('slug', 'Title already exists')->withInput();
         }
 
@@ -50,6 +54,7 @@ class RecipeController extends Controller
                 Storage::disk('public')->put("thumbnail/" . $imageName, file_get_contents($image));
             } catch (\Throwable $th) {
                 //throw $th;
+                Alert::error('Error', 'Failed to upload image');
                 return redirect()->back()->withErrors('upload', 'Failed to upload image')->withInput();
             }
         }
@@ -62,6 +67,7 @@ class RecipeController extends Controller
             'image' => $imageName,
         ]);
 
+        Alert::success('Success', 'Recipe created successfully');
         return redirect()->route('admin.recipes.index');
     }
 
@@ -81,6 +87,7 @@ class RecipeController extends Controller
         ]);
 
         if ($validator->fails()) {
+            Alert::error('Error', 'Failed to update recipe');
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
@@ -89,6 +96,7 @@ class RecipeController extends Controller
         if ($request->title != $recipe->title) {
             $slug = Str::slug($request->title, '-');
             if (Recipe::where('slug', $slug)->exists()) {
+                Alert::error('Error', 'Title already exists');
                 return redirect()->back()->withErrors('slug', 'Title already exists')->withInput();
             } else {
                 $recipe->slug = $slug;
@@ -105,6 +113,7 @@ class RecipeController extends Controller
                 $recipe->image = $imageName;
             } catch (\Throwable $th) {
                 //throw $th;
+                Alert::error('Error', 'Failed to upload image');
                 return redirect()->back()->withErrors('upload', 'Failed to upload image')->withInput();
             }
         }
@@ -114,6 +123,7 @@ class RecipeController extends Controller
         $recipe->video = $request->video;
         $recipe->save();
 
+        Alert::success('Success', 'Recipe updated successfully');
         return redirect()->route('admin.recipes.index');
     }
 
@@ -135,6 +145,7 @@ class RecipeController extends Controller
         }
         $recipe->delete();
 
+        Alert::success('Success', 'Recipe deleted successfully');
         return redirect()->route('admin.recipes.index');
     }
 }

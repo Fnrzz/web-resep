@@ -28,12 +28,8 @@
                                             class="img-fluid">
                                     </td>
                                     <td>
-                                        <form action="{{ route('admin.recipes.steps.images.destroy', $image->id) }}"
-                                            method="POST" class="d-inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                                        </form>
+                                        <a href="{{ route('admin.recipes.steps.images.destroy', $image->id) }}"
+                                            class="btn btn-danger btn-sm" data-confirm-delete="true">Hapus</a>
                                     </td>
                                 </tr>
                             @endforeach

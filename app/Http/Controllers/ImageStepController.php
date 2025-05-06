@@ -7,6 +7,7 @@ use App\Models\Step;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ImageStepController extends Controller
 {
@@ -15,6 +16,7 @@ class ImageStepController extends Controller
     {
         $images = ImageStep::where('step_id', $id)->get();
         $step = Step::with('recipe')->find($id);
+        confirmDelete('Kamu yakin?', 'Kamu akan menghapus semua data');
         return view('admin.steps.step-images.index', compact('images', 'id', 'step'));
     }
 
@@ -30,6 +32,7 @@ class ImageStepController extends Controller
         ]);
 
         if ($validator->fails()) {
+            Alert::error('Error', 'Failed to upload image');
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
@@ -41,6 +44,7 @@ class ImageStepController extends Controller
                 Storage::disk('public')->put("step-images/" . $imageName, file_get_contents($image));
             } catch (\Throwable $th) {
                 //throw $th;
+                Alert::error('Error', 'Failed to upload image');
                 return redirect()->back()->withErrors('upload', 'Failed to upload image')->withInput();
             }
         }
@@ -48,6 +52,7 @@ class ImageStepController extends Controller
             'step_id' => $id,
             'path' => $imageName,
         ]);
+        Alert::success('Success', 'Image uploaded successfully');
         return redirect()->route('admin.recipes.steps.images.index', compact('id'));
     }
 
@@ -56,6 +61,7 @@ class ImageStepController extends Controller
         $image = ImageStep::find($id);
         Storage::disk('public')->delete('step-images/' . $image->path);
         $image->delete();
+        Alert::success('Success', 'Image deleted successfully');
         return redirect()->back();
     }
 }
