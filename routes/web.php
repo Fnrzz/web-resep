@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ImageStepController;
+use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\StepController;
 use Illuminate\Support\Facades\Route;
@@ -45,12 +46,12 @@ Route::prefix('admin')->middleware('auth')->group(function () {
             });
         });
         Route::prefix('ingredients')->group(function () {
-            Route::get('/{slug}', [StepController::class, 'index'])->name('admin.recipes.ingredients.index');
-            Route::get('/create/{id}', [StepController::class, 'create'])->name('admin.recipes.ingredients.create');
-            Route::post('/store/{id}', [StepController::class, 'store'])->name('admin.recipes.ingredients.store');
-            Route::get('/edit/{id}', [StepController::class, 'edit'])->name('admin.recipes.ingredients.edit');
-            Route::post('/update/{id}', [StepController::class, 'update'])->name('admin.recipes.ingredients.update');
-            Route::delete('/delete/{id}', [StepController::class, 'destroy'])->name('admin.recipes.ingredients.destroy');
+            Route::get('/{slug}', [IngredientController::class, 'index'])->name('admin.recipes.ingredients.index');
+            Route::get('/create/{id}', [IngredientController::class, 'create'])->name('admin.recipes.ingredients.create');
+            Route::post('/store/{id}', [IngredientController::class, 'store'])->name('admin.recipes.ingredients.store');
+            Route::get('/edit/{id}', [IngredientController::class, 'edit'])->name('admin.recipes.ingredients.edit');
+            Route::post('/update/{id}', [IngredientController::class, 'update'])->name('admin.recipes.ingredients.update');
+            Route::delete('/delete/{id}', [IngredientController::class, 'destroy'])->name('admin.recipes.ingredients.destroy');
         });
     });
 });
