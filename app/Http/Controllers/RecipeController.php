@@ -116,4 +116,25 @@ class RecipeController extends Controller
 
         return redirect()->route('admin.recipes.index');
     }
+
+    public function destroy($slug)
+    {
+        $recipe = Recipe::where('slug', $slug)->with(['ingredients', 'steps.images'])->first();
+        Storage::disk('public')->delete("thumbnail/" . $recipe->image);
+
+        foreach ($recipe->ingredients as $ingredient) {
+            $ingredient->delete();
+        }
+
+        foreach ($recipe->steps as $step) {
+            foreach ($step->images as $image) {
+                Storage::disk('public')->delete('step-images/' . $image->path);
+                $image->delete();
+            }
+            $step->delete();
+        }
+        $recipe->delete();
+
+        return redirect()->route('admin.recipes.index');
+    }
 }
