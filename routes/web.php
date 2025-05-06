@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ImageStepController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\StepController;
 use Illuminate\Support\Facades\Route;
@@ -31,11 +32,17 @@ Route::prefix('admin')->middleware('auth')->group(function () {
         Route::delete('/delete/{id}', [RecipeController::class, 'destroy'])->name('admin.recipes.destroy');
         Route::prefix('steps')->group(function () {
             Route::get('/{slug}', [StepController::class, 'index'])->name('admin.recipes.steps.index');
-            Route::get('/create/{id}', [StepController::class, 'create'])->name('admin.recipes.steps.create');
-            Route::post('/store/{id}', [StepController::class, 'store'])->name('admin.recipes.steps.store');
+            Route::get('/{slug}/create', [StepController::class, 'create'])->name('admin.recipes.steps.create');
+            Route::post('/{slug}/store', [StepController::class, 'store'])->name('admin.recipes.steps.store');
             Route::get('/edit/{id}', [StepController::class, 'edit'])->name('admin.recipes.steps.edit');
             Route::post('/update/{id}', [StepController::class, 'update'])->name('admin.recipes.steps.update');
             Route::delete('/delete/{id}', [StepController::class, 'destroy'])->name('admin.recipes.steps.destroy');
+            Route::prefix('/{id}/images')->group(function () {
+                Route::get('/', [ImageStepController::class, 'index'])->name('admin.recipes.steps.images.index');
+                Route::get('/create', [ImageStepController::class, 'create'])->name('admin.recipes.steps.images.create');
+                Route::post('/store', [ImageStepController::class, 'store'])->name('admin.recipes.steps.images.store');
+                Route::delete('/delete', [ImageStepController::class, 'destroy'])->name('admin.recipes.steps.images.destroy');
+            });
         });
         Route::prefix('ingredients')->group(function () {
             Route::get('/{slug}', [StepController::class, 'index'])->name('admin.recipes.ingredients.index');
