@@ -7,6 +7,7 @@ use App\Models\Step;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class StepController extends Controller
 {
@@ -16,6 +17,7 @@ class StepController extends Controller
         $recipe = Recipe::where('slug', $slug)->first();
         $steps = Step::where('recipe_id', $recipe->id)->get();
         $title = $recipe->title;
+        confirmDelete('Kamu yakin?', 'Kamu akan menghapus semua data');
         return view("admin.steps.index", compact('steps', 'slug', 'title'));
     }
 
@@ -31,6 +33,7 @@ class StepController extends Controller
         ]);
 
         if ($validator->fails()) {
+            Alert::error('Error', 'Failed to create step');
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
@@ -39,6 +42,7 @@ class StepController extends Controller
             'recipe_id' => $recipe->id,
             'description' => $request->description
         ]);
+        Alert::success('Success', 'Step created successfully');
         return redirect()->route('admin.recipes.steps.index', compact('slug'));
     }
 
@@ -55,6 +59,7 @@ class StepController extends Controller
         ]);
 
         if ($validator->fails()) {
+            Alert::error('Error', 'Failed to update step');
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
@@ -62,6 +67,7 @@ class StepController extends Controller
         $step->description = $request->description;
         $step->save();
         $slug = $step->recipe->slug;
+        Alert::success('Success', 'Step updated successfully');
         return redirect()->route('admin.recipes.steps.index', compact('slug'));
     }
 
@@ -73,6 +79,7 @@ class StepController extends Controller
             $image->delete();
         }
         $step->delete();
+        Alert::success('Success', 'Step deleted successfully');
         return redirect()->back();
     }
 }

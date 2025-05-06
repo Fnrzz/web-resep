@@ -6,6 +6,7 @@ use App\Models\Ingredient;
 use App\Models\Recipe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class IngredientController extends Controller
 {
@@ -15,6 +16,7 @@ class IngredientController extends Controller
         $recipe = Recipe::where('slug', $slug)->first();
         $ingredients = Ingredient::where('recipe_id', $recipe->id)->get();
         $title = $recipe->title;
+        confirmDelete('Kamu yakin?', 'Kamu akan menghapus semua data');
         return view('admin.ingredients.index', compact('ingredients', 'slug', 'title'));
     }
 
@@ -31,6 +33,7 @@ class IngredientController extends Controller
         ]);
 
         if ($validator->fails()) {
+            Alert::error('Error', 'Failed to create ingredient');
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
@@ -40,6 +43,7 @@ class IngredientController extends Controller
             'name' => $request->name,
             'amount' => $request->amount,
         ]);
+        Alert::success('Success', 'Ingredient created successfully');
         return redirect()->route('admin.recipes.ingredients.index', compact('slug'));
     }
 
@@ -57,6 +61,7 @@ class IngredientController extends Controller
         ]);
 
         if ($validator->fails()) {
+            Alert::error('Error', 'Failed to update ingredient');
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
@@ -65,6 +70,7 @@ class IngredientController extends Controller
         $ingredient->amount = $request->amount;
         $ingredient->save();
         $slug = $ingredient->recipe->slug;
+        Alert::success('Success', 'Ingredient updated successfully');
         return redirect()->route('admin.recipes.ingredients.index', compact('slug'));
     }
 
@@ -73,6 +79,7 @@ class IngredientController extends Controller
         $ingredient = Ingredient::find($id);
         $slug = $ingredient->recipe->slug;
         $ingredient->delete();
+        Alert::success('Success', 'Ingredient deleted successfully');
         return redirect()->route('admin.recipes.ingredients.index', compact('slug'));
     }
 }
