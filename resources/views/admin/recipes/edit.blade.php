@@ -4,7 +4,7 @@
 @section('content')
     <a href="{{ route('admin.recipes.index') }}" class="text-decoration-none">Kembali</a>
 
-    <h1 class="h3 my-3"><strong>Tambah</strong> Resep</h1>
+    <h1 class="h3 my-3"><strong>Edit</strong> Resep</h1>
 
     <div class="row">
         <div class="col-12">
