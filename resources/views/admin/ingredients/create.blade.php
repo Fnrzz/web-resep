@@ -12,19 +12,20 @@
                 <div class="card-body">
                     <form action="{{ route('admin.recipes.ingredients.store', $slug) }}" method="POST">
                         @csrf
+                        
+                        <div class="mb-3">
+                            <label for="amount" class="form-label">Jumlah</label>
+                            <input type="number" class="form-control" id="amount" name="amount"
+                                placeholder="Masukan jumlah" value="{{ old('amount') }}" required />
+                            @error('amount')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
                         <div class="mb-3">
                             <label for="name" class="form-label">Nama</label>
                             <input type="text" class="form-control" id="name" name="name"
                                 placeholder="Masukkan Nama" value="{{ old('name') }}" required />
                             @error('name')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label for="amount" class="form-label">Jumlah</label>
-                            <input type="number" class="form-control" id="amount" name="amount"
-                                placeholder="Masukkan Nama" value="{{ old('amount') }}" required />
-                            @error('amount')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>

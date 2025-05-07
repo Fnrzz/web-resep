@@ -1,5 +1,8 @@
 @extends('admin.layouts.layout')
 
+@section('style')
+    <link href="{{ asset('css/responsive-layout.css') }}" rel="stylesheet">
+@endsection
 
 @section('content')
     <a href="{{ route('admin.recipes.index') }}" class="text-decoration-none">Kembali</a>
@@ -10,36 +13,44 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">No</th>
-                                <th scope="col">Steps</th>
-                                <th scope="col">Gambar</th>
-                                <th scope="col">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($steps as $step)
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $step->description }}</td>
-                                    <td>
-                                        <a href="{{ route('admin.recipes.steps.images.index', $step->id) }}"
-                                            class="btn btn-primary btn-sm">Detail</a>
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('admin.recipes.steps.edit', $step->id) }}"
-                                            class="btn btn-warning btn-sm">Edit</a>
-                                        <a href="{{ route('admin.recipes.steps.destroy', $step->id) }}"
-                                            class="btn btn-danger btn-sm" data-confirm-delete="true">Hapus</a>
-                                    </td>
+                                    <th scope="col">No</th>
+                                    <th scope="col">Steps</th>
+                                    <th scope="col">Gambar</th>
+                                    <th scope="col">Aksi</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach ($steps as $step)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $step->description }}</td>
+                                        <td>
+                                            <a href="{{ route('admin.recipes.steps.images.index', $step->id) }}"
+                                                class="btn btn-primary btn-sm">Detail</a>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm" role="group">
+                                                <a href="{{ route('admin.recipes.steps.edit', $step->id) }}"
+                                                    class="btn btn-warning">Edit</a>
+                                                <a href="{{ route('admin.recipes.steps.destroy', $step->id) }}"
+                                                    class="btn btn-danger" data-confirm-delete="true">Hapus</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script src="{{ asset('js/responsive-layout.js') }}"></script>
 @endsection
