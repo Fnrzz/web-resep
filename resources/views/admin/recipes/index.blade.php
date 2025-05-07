@@ -1,5 +1,9 @@
 @extends('admin.layouts.layout')
 
+@section('style')
+    <link href="{{ asset('css/responsive-layout.css') }}" rel="stylesheet">
+@endsection
+
 @section('content')
     <h1 class="h3 mb-3"><strong>Kelola</strong> Resep</h1>
     <a href="{{ route('admin.recipes.create') }}" class="btn btn-primary mb-3">Tambah Resep</a>
@@ -49,78 +53,8 @@
             </div>
         </div>
     </div>
+@endsection
 
-    <style>
-        @media (max-width: 768px) {
-            .table-responsive {
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-            }
-            .table {
-                width: 100%;
-                margin-bottom: 1rem;
-                background-color: transparent;
-                display: block;
-            }
-            .table thead {
-                display: none;
-            }
-            .table tbody {
-                display: block;
-                width: 100%;
-            }
-            .table tr {
-                display: block;
-                margin-bottom: 1rem;
-                border: 1px solid #dee2e6;
-                border-radius: 0.25rem;
-            }
-            .table td {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 0.75rem;
-                border-top: none;
-                border-bottom: 1px solid #dee2e6;
-                position: relative;
-                padding-left: 50%;
-            }
-            .table td:before {
-                content: attr(data-label);
-                position: absolute;
-                left: 0.75rem;
-                width: 45%;
-                padding-right: 1rem;
-                font-weight: bold;
-                text-align: left;
-            }
-            .table td:last-child {
-                border-bottom: none;
-            }
-            /* Perbaikan khusus untuk tombol aksi */
-            .table td .btn-group {
-                display: flex;
-                gap: 0.25rem;
-            }
-            .table td .btn {
-                margin: 0;
-                padding: 0.25rem 0.5rem;
-            }
-        }
-    </style>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Tambahkan data-label untuk responsive table
-            const headers = document.querySelectorAll('thead th');
-            const cells = document.querySelectorAll('tbody td');
-            
-            headers.forEach((header, index) => {
-                const label = header.textContent;
-                document.querySelectorAll(`tbody td:nth-child(${index + 1})`).forEach(cell => {
-                    cell.setAttribute('data-label', label);
-                });
-            });
-        });
-    </script>
+@section('script')
+    <script src="{{ asset('js/responsive-layout.js') }}"></script>
 @endsection

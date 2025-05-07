@@ -16,30 +16,35 @@
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    
+    @yield('style')
 </head>
 
 <body>
-
     <div class="wrapper">
-        <!-- Sidebar -->
+        
         @include('admin.layouts.sidebar')
 
         <div class="main">
-            <!-- Navbar -->
+            
             @include('admin.layouts.navbar')
 
             <main class="content">
-                <!-- Content will be inserted here -->
+                
                 @yield('content')
             </main>
 
-            <!-- Footer (if you have one) -->
+           
             @include('admin.layouts.footer')
         </div>
     </div>
 
     <script src="{{ asset('js/app.js') }}"></script>
     @include('sweetalert::alert')
+    
+    
+    @yield('script')
 </body>
 
 </html>
