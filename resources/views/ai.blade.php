@@ -1,10 +1,10 @@
 @extends('layouts.layout')
 
 @section('content')
-    <section class="vh-100 w-100 d-flex flex-column align-items-center justify-content-center">
+    <section class="vh-100 w-100 d-flex flex-column align-items-center justify-content-center container">
         <h1 class="fs-3 fw-bold">Mau Tanya Apa?</h1>
-        <p class="fs-5">Saya siap mencarikan resep untuk kamu !</p>
-        <div class="w-50">
+        <p class="fs-5 text-center">Saya siap mencarikan resep untuk kamu !</p>
+        <div class="box-form-question">
             <form action="{{ route('ai.ask') }}" method="post">
                 @csrf
                 <div class="mb-3">

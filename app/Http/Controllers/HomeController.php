@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Recipe;
 use Illuminate\Support\Facades\Storage;
 
@@ -14,10 +15,8 @@ class HomeController extends Controller
         return view('ai');
     }
     public function menu()
-{
-    $recipes = Recipe::all();
-    return view('menu', compact('recipes'));
-}
-
-    
+    {
+        $recipes = Recipe::all();
+        return view('menu', compact('recipes'));
+    }
 }
