@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AIController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImageStepController;
 use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\RecipeController;
@@ -11,6 +13,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/tanya-ai', [HomeController::class, 'tanyaAI'])->name('tanya-ai');
+Route::post('/tanya-ai', [AIController::class, 'ask'])->name('ai.ask');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'login'])->name('login');
