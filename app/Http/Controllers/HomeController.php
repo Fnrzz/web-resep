@@ -15,19 +15,8 @@ class HomeController extends Controller
     }
     public function menu()
 {
-    $recipes = Recipe::all()->map(function ($recipe) {
-        // Gunakan path langsung untuk debugging
-        $imagePath = 'thumbnail/' . $recipe->image;
-        $fullPath = storage_path('app/public/' . $imagePath);
-        
-        return [
-            'title' => $recipe->title,
-            'rating' => 5,
-            'image' => file_exists($fullPath) ? asset('storage/' . $imagePath) : null
-        ];
-    });
-
-    return view('menu', ['recipes' => $recipes]);
+    $recipes = Recipe::all();
+    return view('menu', compact('recipes'));
 }
 
     
