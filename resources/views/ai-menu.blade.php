@@ -1,10 +1,10 @@
 @extends('layouts.layout')
 
 @section('content')
-    <section class="vh-100 w-100 container d-flex flex-column justify-content-center">
+    <section class="min-vh-100 w-100 container py-5">
         <h1 class="fs-3 fw-bold">Hasil Pencarian AI</h1>
         <p>{{ $reason }}</p>
-        <div class="row row-cols-1 row-cols-md-4 g-3 mt-4">
+        <div class="row row-cols-1 row-cols-md-4 g-3 mt-3">
             @foreach ($outputRecipe as $recipe)
                 <div class="col">
                     <img src="{{ asset('/storage/thumbnail/' . $recipe->image) }}"
