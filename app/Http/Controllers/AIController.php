@@ -32,8 +32,9 @@ class AIController extends Controller
             "\n\nPertanyaan: \"$question\"\n\n" .
             "Pilih resep yang paling sesuai dari daftar di atas.\n\n" .
             "Balas **dalam format JSON murni** TANPA teks tambahan, TANPA blok markdown. Format HARUS seperti ini:\n" .
-            "{ \"id\": nomor_id_resep anda bisa menambahkan lebih dari 1 id resep dan id resep harus berbentuk array, \"alasan\": \"alasan kenapa resep tersebut paling cocok\" }\n\n" .
-            "Jangan kosongkan field 'alasan'. Jawabanmu akan langsung dibaca oleh sistem backend.";
+            "{ \"id\": nomor_id_resep anda bisa menambahkan lebih dari 1 id resep dan id resep harus berbentuk array, \"alasan\": \"alasan kenapa resep tersebut paling cocok dan jangan masukkan id resep pada alasan\" }\n\n" .
+            "Jangan kosongkan field 'alasan'. Jawabanmu akan langsung dibaca oleh sistem backend.\n\n" .
+            "Gunakan kata 'Teman Resepku' untuk mengganti kata seperti pengguna,kamu, atau kata yang merujuk ke user. dan batasi penggunaan kalimat hanya untuk 1 kalimat saja";
 
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
