@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Http;
 class AIController extends Controller
 {
     //
+    protected $ratingController;
+    public function __construct(RatingController $ratingController)
+    {
+        $this->ratingController = $ratingController;
+    }
     public function ask(Request $request)
     {
         $question = $request->question;
@@ -49,6 +54,14 @@ class AIController extends Controller
         $output = json_decode($cleaned, true);
 
         $outputRecipe = Recipe::whereIn('id', $output['id'])->get();
+        $outputRecipe = $outputRecipe->map(function ($recipe) {
+            return [
+                'title' => $recipe->title,
+                'image' => $recipe->image,
+                'slug' => $recipe->slug,
+                'rating' => $this->ratingController->getRatingByRecipe($recipe->id)
+            ];
+        });
         $reason = $output['alasan'];
 
         return view('ai-menu', compact('outputRecipe', 'reason'));
