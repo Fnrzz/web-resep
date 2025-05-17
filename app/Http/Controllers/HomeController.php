@@ -32,4 +32,22 @@ class HomeController extends Controller
         });
         return view('menu', compact('data'));
     }
+
+    /**
+     * Display the landing page with featured recipes
+     */
+    public function index()
+    {
+        // Get 8 latest recipes with their ratings
+        $featuredRecipes = Recipe::query()
+            ->latest()
+            ->take(8)
+            ->get()
+            ->map(function ($recipe) {
+                $recipe->rating = $this->ratingController->getRatingByRecipe($recipe->id);
+                return $recipe;
+            });
+
+        return view('index', compact('featuredRecipes'));
+    }
 }
