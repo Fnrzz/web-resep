@@ -15,6 +15,7 @@ Route::get('/menu', [HomeController::class, 'menu'])->name('menu');
 Route::post('/tanya-ai', [AIController::class, 'ask'])->name('ai.ask');
 
 
+
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'login'])->name('login');
     Route::post('/login', [AuthController::class, 'authenticate'])->name('authenticate');
@@ -65,3 +66,4 @@ Route::middleware('auth')->group(function () {
     })->name('user.dashboard');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });
+Route::get('/{slug}', [HomeController::class, 'showRecipe'])->name('recipe.show');
