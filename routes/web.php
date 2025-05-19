@@ -13,6 +13,7 @@ Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('/tanya-ai', [HomeController::class, 'tanyaAI'])->name('tanya-ai');
 Route::get('/menu', [HomeController::class, 'menu'])->name('menu');
 Route::post('/tanya-ai', [AIController::class, 'ask'])->name('ai.ask');
+Route::get('/{slug}', [HomeController::class, 'showRecipe'])->name('recipe.show');
 
 
 Route::middleware('guest')->group(function () {

@@ -49,15 +49,16 @@
         </div>
     </section>
 
-    <!-- Menu Resep Section -->
-    <section class="container min-vh-100 py-3">
-        <h1 class="fs-3 fw-bold text-center mb-4">Menu Resep</h1>
-        <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
-            @forelse($featuredRecipes as $recipe)
-                <div class="col">
+<!-- Menu Resep Section -->
+<section class="container min-vh-100 py-3">
+    <h1 class="fs-3 fw-bold text-center mb-4">Menu Resep</h1>
+    <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
+        @forelse($featuredRecipes as $recipe)
+            <div class="col">
+                <a href="{{ route('recipe.show', $recipe->slug) }}" class="text-decoration-none">
                     <img src="{{ asset('storage/thumbnail/' . $recipe->image) }}"
                         class="img-fluid rounded-4 w-100 h-75 mb-3" alt="{{ $recipe->title }}">
-                    <h5 class="fw-bold">{{ $recipe->title }}</h5>
+                    <h5 class="fw-bold text-dark">{{ $recipe->title }}</h5>
                     <p class="text-muted">
                         Rating:
                         @if ($recipe->rating == 0)
@@ -68,19 +69,20 @@
                             @endfor
                         @endif
                     </p>
+                </a>
+            </div>
+        @empty
+            <div class="col-12">
+                <div class="alert alert-warning text-center">
+                    <i class="fas fa-exclamation-circle me-2"></i>
+                    Belum ada resep tersedia
                 </div>
-            @empty
-                <div class="col-12">
-                    <div class="alert alert-warning text-center">
-                        <i class="fas fa-exclamation-circle me-2"></i>
-                        Belum ada resep tersedia
-                    </div>
-                </div>
-            @endforelse
-        </div>
-        <div class="text-center mt-4">
-            <a href="{{ route('menu') }}" class="btn btn-warning fw-bold text-white px-4 py-2">Lihat Semua Resep</a>
-        </div>
-    </section>
+            </div>
+        @endforelse
+    </div>
+    <div class="text-center mt-4">
+        <a href="{{ route('menu') }}" class="btn btn-warning fw-bold text-white px-4 py-2">Lihat Semua Resep</a>
+    </div>
+</section>
 
 @endsection

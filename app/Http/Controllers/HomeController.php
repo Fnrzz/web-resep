@@ -50,4 +50,14 @@ class HomeController extends Controller
 
         return view('index', compact('featuredRecipes'));
     }
+
+    public function showRecipe($slug)
+    {
+        $recipe = Recipe::with(['ingredients', 'steps.images'])
+                      ->where('slug', $slug)
+                      ->firstOrFail();
+
+        return view('detailresep', compact('recipe'));
+    }
+
 }

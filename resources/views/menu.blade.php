@@ -6,19 +6,27 @@
         <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
             @forelse($data as $recipe)
                 <div class="col">
-                    <img src="{{ asset('/storage/thumbnail/' . $recipe['image']) }}"
-                        class="img-fluid rounded-4 w-100 h-75 mb-3">
-                    <h5 class="fw-bold">{{ $recipe['title'] }}</h5>
-                    <p class="text-muted">
-                        Rating :
-                        @if ($recipe['rating'] == 0)
-                            -
-                        @else
-                            @for ($i = 0; $i < floor($recipe['rating']); $i++)
-                                ⭐️
-                            @endfor
-                        @endif
-                    </p>
+                    <a href="{{ route('recipe.show', $recipe['slug']) }}" class="text-decoration-none text-dark">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <img src="{{ asset('storage/thumbnail/' . $recipe['image']) }}"
+                                class="card-img-top img-fluid rounded-top-4" 
+                                alt="{{ $recipe['title'] }}"
+                                style="height: 200px; object-fit: cover;">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">{{ $recipe['title'] }}</h5>
+                                <p class="card-text text-muted mb-2">
+                                    Rating:
+                                    @if ($recipe['rating'] == 0)
+                                        -
+                                    @else
+                                        @for ($i = 0; $i < floor($recipe['rating']); $i++)
+                                            ⭐️
+                                        @endfor
+                                    @endif
+                                </p>
+                            </div>
+                        </div>
+                    </a>
                 </div>
             @empty
                 <div class="col-12">
