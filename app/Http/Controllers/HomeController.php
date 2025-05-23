@@ -54,10 +54,11 @@ class HomeController extends Controller
     public function showRecipe($slug)
     {
         $recipe = Recipe::with(['ingredients', 'steps.images'])
-                      ->where('slug', $slug)
-                      ->firstOrFail();
+            ->where('slug', $slug)
+            ->firstOrFail();
+
+        $recipe->rating = $this->ratingController->getRatingByRecipe($recipe->id);
 
         return view('detailresep', compact('recipe'));
     }
-
 }
