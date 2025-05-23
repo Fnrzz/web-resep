@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AIController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImageStepController;
 use App\Http\Controllers\IngredientController;
@@ -13,8 +14,6 @@ Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('/tanya-ai', [HomeController::class, 'tanyaAI'])->name('tanya-ai');
 Route::get('/menu', [HomeController::class, 'menu'])->name('menu');
 Route::post('/tanya-ai', [AIController::class, 'ask'])->name('ai.ask');
-Route::get('/{slug}', [HomeController::class, 'showRecipe'])->name('recipe.show');
-
 
 
 Route::middleware('guest')->group(function () {
@@ -65,6 +64,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
         return view('user.dashboard');
     })->name('user.dashboard');
+    Route::post('/recipe-save/{slug}', [FavoriteController::class, 'save'])->name('recipe.save');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 Route::get('/{slug}', [HomeController::class, 'showRecipe'])->name('recipe.show');
