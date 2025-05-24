@@ -19,15 +19,25 @@ class HomeController extends Controller
     {
         return view('ai');
     }
-    public function menu()
+    public function menu(Request $request)
     {
-        $data = Recipe::query()
-            ->latest()
-            ->get()
-            ->map(function ($recipe) {
-                $recipe->rating = $this->ratingController->getRatingByRecipe($recipe->id);
-                return $recipe;
-            });
+        if ($request->has('search')) {
+            $data = Recipe::query()
+                ->where('title', 'like', '%' . $request->search . '%')
+                ->get()
+                ->map(function ($recipe) {
+                    $recipe->rating = $this->ratingController->getRatingByRecipe($recipe->id);
+                    return $recipe;
+                });
+        } else {
+            $data = Recipe::query()
+                ->latest()
+                ->get()
+                ->map(function ($recipe) {
+                    $recipe->rating = $this->ratingController->getRatingByRecipe($recipe->id);
+                    return $recipe;
+                });
+        }
         return view('menu', compact('data'));
     }
 
