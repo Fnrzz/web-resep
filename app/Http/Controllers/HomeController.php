@@ -21,15 +21,13 @@ class HomeController extends Controller
     }
     public function menu()
     {
-        $recipes = Recipe::select('id', 'title', 'slug', 'image')->get();
-        $data = $recipes->map(function ($recipe) {
-            return [
-                'title' => $recipe->title,
-                'slug' => $recipe->slug,
-                'image' => $recipe->image,
-                'rating' => $this->ratingController->getRatingByRecipe($recipe->id)
-            ];
-        });
+        $data = Recipe::query()
+            ->latest()
+            ->get()
+            ->map(function ($recipe) {
+                $recipe->rating = $this->ratingController->getRatingByRecipe($recipe->id);
+                return $recipe;
+            });
         return view('menu', compact('data'));
     }
 
