@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('/tanya-ai', [HomeController::class, 'tanyaAI'])->name('tanya-ai');
 Route::get('/menu', [HomeController::class, 'menu'])->name('menu');
+Route::get('/menu/{slug}', [HomeController::class, 'showRecipe'])->name('recipe.show');
 Route::post('/tanya-ai', [AIController::class, 'ask'])->name('ai.ask');
 
 
@@ -72,4 +73,3 @@ Route::middleware('auth')->group(function () {
     Route::post('/recipe-save/{slug}', [FavoriteController::class, 'save'])->name('recipe.save');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });
-Route::get('/{slug}', [HomeController::class, 'showRecipe'])->name('recipe.show');
