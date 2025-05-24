@@ -8,6 +8,7 @@ use App\Http\Controllers\ImageStepController;
 use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\StepController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('index');
@@ -62,7 +63,11 @@ Route::prefix('admin')->middleware('admin')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
-        return view('user.dashboard');
+        $user = Auth::user();
+        $favoriteRecipes = $user->favoriteRecipes->map(function ($recipe) {
+            return collect($recipe)->only(['title', 'slug', 'image']);
+        });
+        return view('user.dashboard', compact('favoriteRecipes'));
     })->name('user.dashboard');
     Route::post('/recipe-save/{slug}', [FavoriteController::class, 'save'])->name('recipe.save');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');

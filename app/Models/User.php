@@ -45,4 +45,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function favoriteRecipes()
+    {
+        return $this->hasManyThrough(Recipe::class, Favorite::class, 'user_id', 'id', 'id', 'recipe_id');
+    }
 }
