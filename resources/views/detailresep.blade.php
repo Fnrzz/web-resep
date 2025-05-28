@@ -88,8 +88,39 @@
                     @endauth
 
                     @if ($recipe->video)
-                        <a href="{{ $recipe->video }}" class="btn btn-outline-warning fw-bold" target="_blank">Nonton
-                            Video</a>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
+                            data-bs-target="#modalvideo">
+                            Nonton Video
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="modalvideo" tabindex="-1" aria-labelledby="modalvideoLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-lg"> <!-- optional: modal-lg biar lebih lebar -->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="modalvideoLabel">Video YouTube</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="ratio ratio-16x9">
+                                            @php
+                                                parse_str(parse_url($recipe->video, PHP_URL_QUERY), $videoParams);
+                                                $videoId = $videoParams['v'] ?? null;
+                                                $embedUrl = $videoId ? "https://www.youtube.com/embed/$videoId" : '';
+                                            @endphp
+
+                                            <iframe id="ytvideo" class="w-100" height="400" src="{{ $embedUrl }}"
+                                                title="YouTube video" allowfullscreen
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+                                            </iframe>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     @endif
                 </div>
             </div>
