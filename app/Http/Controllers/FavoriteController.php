@@ -19,18 +19,19 @@ class FavoriteController extends Controller
     public function save(Request $request, $slug)
     {
         $request->validate([
-            'rating' => 'required|integer|min:1|max:5',
+            'rating' => 'integer|min:1|max:5',
         ]);
 
         $recipeId = Recipe::where('slug', $slug)->select('id')->firstOrFail();
 
         $userId = Auth::user()->id;
 
-        $addRating = $this->ratingController->addRating($recipeId->id, $request->rating, $userId);
-
-        if (!$addRating) {
-            Alert::error('Gagal', 'Gagal menambahkan rating');
-            return back();
+        if ($request->rating) {
+            $addRating = $this->ratingController->addRating($recipeId->id, $request->rating, $userId);
+            if (!$addRating) {
+                Alert::error('Gagal', 'Gagal menambahkan rating');
+                return back();
+            }
         }
 
         Favorite::create([
@@ -39,6 +40,15 @@ class FavoriteController extends Controller
         ]);
 
         Alert::success('Berhasil', 'Berhasil menyimpan resep');
+        return back();
+    }
+
+    public function unsave($slug)
+    {
+        $recipeId = Recipe::where('slug', $slug)->select('id')->firstOrFail();
+        $userId = Auth::user()->id;
+        Favorite::where('recipe_id', $recipeId->id)->where('user_id', $userId)->delete();
+        Alert::success('Berhasil', 'Berhasil menghapus resep');
         return back();
     }
 }

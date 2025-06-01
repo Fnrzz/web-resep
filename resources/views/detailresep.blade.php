@@ -40,47 +40,54 @@
                     @endphp
                     @auth
                         @if ($alreadyRated)
-                            <a type="button" class="btn btn-warning text-white me-3">
+                            <a href="{{ route('recipe.unsave', $recipe->slug) }}" class="btn btn-warning text-white me-3"
+                                data-confirm-delete="true">
                                 <i class="bi bi-bookmark-check"></i> Tersimpan
                             </a>
                         @else
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-warning text-white me-3" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">
-                                Simpan Resep
-                            </button>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                                aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Berikan Rating</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form action="{{ route('recipe.save', $recipe->slug) }}" method="POST"
-                                                id="rating-form">
-                                                @csrf
-                                                <div class="star-rating d-flex justify-content-center">
-                                                    <span class="star" data-value="1">&#9733;</span>
-                                                    <span class="star" data-value="2">&#9733;</span>
-                                                    <span class="star" data-value="3">&#9733;</span>
-                                                    <span class="star" data-value="4">&#9733;</span>
-                                                    <span class="star" data-value="5">&#9733;</span>
-                                                </div>
-                                                <input type="hidden" name="rating" id="ratingValue" value="0">
-                                                <br>
-                                                <div class="d-grid">
-                                                    <button type="submit" class="btn btn-primary ">Simpan</button>
-                                                </div>
-                                            </form>
+                            @if ($recipe->ratings()->where('user_id', auth()->id())->exists())
+                                <form action="{{ route('recipe.save', $recipe->slug) }}" method="post">
+                                    @csrf
+                                    <button type="submit" class="btn btn-warning text-white me-3">
+                                        Simpan Resep
+                                    </button>
+                                </form>
+                            @else
+                                <button type="button" class="btn btn-warning text-white me-3" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal">
+                                    Simpan Resep
+                                </button>
+                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Berikan Rating</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="{{ route('recipe.save', $recipe->slug) }}" method="POST"
+                                                    id="rating-form">
+                                                    @csrf
+                                                    <div class="star-rating d-flex justify-content-center">
+                                                        <span class="star" data-value="1">&#9733;</span>
+                                                        <span class="star" data-value="2">&#9733;</span>
+                                                        <span class="star" data-value="3">&#9733;</span>
+                                                        <span class="star" data-value="4">&#9733;</span>
+                                                        <span class="star" data-value="5">&#9733;</span>
+                                                    </div>
+                                                    <input type="hidden" name="rating" id="ratingValue" value="0">
+                                                    <br>
+                                                    <div class="d-grid">
+                                                        <button type="submit" class="btn btn-primary ">Simpan</button>
+                                                    </div>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endif
                         @endif
                     @else
                         <a class="btn btn-warning text-white fw-bold me-3" href="{{ route('login') }}">Simpan
