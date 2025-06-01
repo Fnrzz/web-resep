@@ -38,7 +38,7 @@
                     <h4 class="fw-bold mb-3">Simpan Resep</h4>
                     <p class="mb-4">Melalui fitur simpan resep, kamu dapat menyimpan resep untuk dibaca di kemudian hari.
                     </p>
-                    <a href="#" class="btn btn-warning text-white fw-bold px-4 py-2">Coba Sekarang!</a>
+                    <a href="{{ route('menu') }}" class="btn btn-warning text-white fw-bold px-4 py-2">Coba Sekarang!</a>
                 </div>
                 <div class="col text-center simpan-resep-img">
                     <img src="{{ asset('images/kumpulan-makanan.png') }}" alt="Kumpulan Makanan"

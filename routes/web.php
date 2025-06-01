@@ -71,5 +71,6 @@ Route::middleware('auth')->group(function () {
         return view('user.dashboard', compact('favoriteRecipes'));
     })->name('user.dashboard');
     Route::post('/recipe-save/{slug}', [FavoriteController::class, 'save'])->name('recipe.save');
+    Route::delete('/recipe-unsave/{slug}', [FavoriteController::class, 'unsave'])->name('recipe.unsave');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });

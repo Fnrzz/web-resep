@@ -41,12 +41,9 @@ class HomeController extends Controller
         return view('menu', compact('data'));
     }
 
-    /**
-     * Display the landing page with featured recipes
-     */
+
     public function index()
     {
-        // Get 8 latest recipes with their ratings
         $featuredRecipes = Recipe::query()
             ->latest()
             ->take(8)
@@ -67,6 +64,7 @@ class HomeController extends Controller
 
         $recipe->rating = $this->ratingController->getRatingByRecipe($recipe->id);
 
+        confirmDelete('Kamu yakin?', 'Kamu akan menghapus resep ini dari favorit');
         return view('detailresep', compact('recipe'));
     }
 }
