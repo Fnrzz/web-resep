@@ -1,0 +1,18 @@
+.btn-orange{
+    background-color: orange;
+    color: white;
+}
+
+.btn-orange:hover{
+    background-color: darkorange;
+}
+
+.box-form-question{
+    width: 50%;
+}
+
+@media screen and (max-width: 768px) {
+    .box-form-question{
+        width: 100%;
+    }  
+}
