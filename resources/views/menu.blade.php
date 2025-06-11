@@ -19,8 +19,8 @@
             @foreach ($data as $recipe)
                 <div class="col">
                     <a href="{{ route('recipe.show', $recipe->slug) }}" class="text-decoration-none">
-                        <img src="{{ asset('storage/thumbnail/' . $recipe->image) }}"
-                            class="img-fluid rounded-4 w-100 h-75 mb-3" alt="{{ $recipe->title }}">
+                        <img src="{{ asset('storage/thumbnail/' . $recipe->image) }}" class="rounded-4 w-100 mb-3"
+                            alt="{{ $recipe->title }}" style="height: 200px">
                         <h5 class="fw-bold text-dark">{{ $recipe->title }}</h5>
                         <p class="text-muted">
                             Rating:
